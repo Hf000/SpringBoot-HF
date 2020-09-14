@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId><!--指定此工程为springboot项目-->
+        <version>2.3.3.RELEASE</version>
+    </parent>
+    <groupId>com.hufei</groupId>
+    <artifactId>springboot</artifactId><!--此工程名称-->
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <java.version>1.8</java.version><!--指定jdk版本为1.8-->
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId><!--springboot项目启动依赖-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId><!--springboot项目通过配置项文件注入属性依赖 注解@ConfigurationProperties-->
+            <optional>true</optional><!--不传递依赖-->
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId><!--引入lombok依赖用来简洁pojo实体类-->
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId><!--阿里巴巴druid数据连接池依赖，相比于hikari更安全-->
+            <version>1.1.23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId><!--添加springboot默认的数据库连接池启动依赖，相比于druid更高效-->
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId><!--数据库连接驱动启动依赖-->
+            <version>5.1.47</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId><!--添加mybatis启动依赖-->
+            <version>2.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId><!--mybatis整合通用mapper启动依赖-->
+            <version>2.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId><!--添加junit测试启动依赖-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId><!--添加redis启动依赖-->
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId><!--配置打jar包插件，打jar包时如果不配置该插件，打出来的jar包没有清单文件-->
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

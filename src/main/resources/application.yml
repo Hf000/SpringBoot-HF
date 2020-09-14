@@ -1,0 +1,32 @@
+#yml(yaml)文件格式规范， 如果key后面有值，:后面必须空一格， 前缀和key换行并且空两格
+#jdbc:   #配置数据库连接池参数
+#  driverClassName: com.mysql.jdbc.Driver
+#  url: jdbc:mysql://127.0.0.1:3306/springboot1?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+#  username: root
+#  password: root
+
+spring:
+#  profiles:
+#    active: a,b        #激活多个yml配置文件, 其他配置文件的命名规则 application-*.yml
+  datasource:           #配置hikari数据连接池参数
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/springboot_test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+    username: root
+    password: 123456
+  redis:              #配置redis相关参数
+    host: localhost   #默认
+    port: 6379        #默认
+
+mybatis:            #mybatis配置
+  type-aliases-package: com.hufei.entity          #配置实体类别名包路径，配置这个配置项在mapper里面就不需要写全限定名了，只需要写对应实体类名即可
+#  mapper-locations: classpath:mappers/*.xml       #配置mapper映射文件路径地址，如果没有则不写该项配置
+  configuration:                                  #配置mybati日志配置项
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   #配置mybatis日志后台输出
+
+server:           #tomcat配置    修改tomcat端口 默认端口是8080
+  port: 80
+
+logging:                #配置日志的记录级别
+  level:
+    com.hufei: debug              #表示以com.hufei开头的类的日志记录级别是debug
+    org.springframework: info     #表示以org.springframework开头的类的日志记录级别是info
