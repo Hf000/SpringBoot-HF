@@ -125,6 +125,7 @@ public class WebSocketServer {
                     String msg = jsonObject.getString("msg");
                     if (StringUtils.isNotEmpty(toUserId) && webSocketMap.containsKey(toUserId)) {
                         webSocketMap.get(toUserId).sendMessage(msg);
+                        sendMessage("发送消息成功！");
                     } else {
                         sendMessage("您推送消息的目标用户当前不在线，消息推送失败！");
                     }
