@@ -77,7 +77,7 @@ public class WebSocketServer {
      */
     public static synchronized void addOnlineCount() {
         WebSocketServer.onlineCount.incrementAndGet();
-        log.info("websocket连接成功，当前在线人数加1");
+        log.info("websocket连接成功，当前在线人数加1，总的在线人数：" + getOnlineCount());
     }
 
     /*
@@ -108,7 +108,7 @@ public class WebSocketServer {
      */
     public static synchronized void subOnlineCount() {
         WebSocketServer.onlineCount.decrementAndGet();
-        log.info("websocket连接关闭成功，当前在线人数减1");
+        log.info("websocket连接关闭成功，当前在线人数减1，总的在线人数：" + getOnlineCount());
     }
 
     /*
