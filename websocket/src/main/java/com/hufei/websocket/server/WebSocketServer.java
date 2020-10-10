@@ -14,6 +14,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @CreateTime:2020-09-30
  * @Description:连接、消息管理
  */
-@ServerEndpoint("/ws/{userId}")     //开启端点的方式进行访问注解
+@ServerEndpoint("/ws/{messageType}/{userId}")     //开启端点的方式进行访问注解
 @Component                          //将该实例实例化到spring容器中
 public class WebSocketServer {
     //日志
@@ -31,36 +32,58 @@ public class WebSocketServer {
     //在线数量
     private static final AtomicInteger onlineCount = new AtomicInteger(0);
     //处理客户端连接socket
-    private static Map<String, WebSocketServer> webSocketMap = new ConcurrentHashMap<>();
+    private static Map<String, WebSocketServer> webSocketMap = new ConcurrentHashMap<String, WebSocketServer>();
     //会话信息
     private Session session;
     //用户信息
     private String userId = "";
+    //聊天室
+    private static Map<Integer, ConcurrentHashMap<String, WebSocketServer>> webSocketRoom = new ConcurrentHashMap<Integer, ConcurrentHashMap<String, WebSocketServer>>();
+    //当前聊天室频道
+    private int roomNum = 0;
 
     /**
-    *@params: [userId, session]
+    *@params: [userId, messageType, session]
     *@return: void
     *@description: 打开WebSokcet连接
     *@author: hufei
     *@time: 2020/10/10 10:32
     */
     @OnOpen
-    public void onOPen(@PathParam("userId") String userId, Session session) {
+    public void onOPen(@PathParam("userId") String userId, @PathParam("messageType") Integer messageType, Session session) {
         try {
             //处理session和用户信息
             this.session = session;
             this.userId = userId;
-            if (webSocketMap.containsKey(userId)) {
-                webSocketMap.remove(userId);
-                webSocketMap.put(userId, this);
+            this.roomNum = messageType;
+            if (roomNum == 0) {
+                if (webSocketMap.containsKey(userId)) {
+                    webSocketMap.remove(userId);
+                    webSocketMap.put(userId, this);
+                } else {
+                    webSocketMap.put(userId, this);
+                    //增加在线人数
+                    addOnlineCount();
+                }
+                //处理连接成功消息的发送
+                sendMessage("Server>>>>远程WebSoket连接成功");
+                log.info("用户" + userId + "成功连接，当前的在线人数为" + getOnlineCount());
+            } else if(roomNum == 1) {
+                ConcurrentHashMap<String, WebSocketServer> roomMap = null;
+                if (webSocketRoom.containsKey(roomNum)) {
+                    roomMap = webSocketRoom.get(roomNum);
+                    roomMap.remove(userId);
+                    roomMap.put(userId, this);
+                } else {
+                    roomMap = new ConcurrentHashMap<String, WebSocketServer>();
+                    roomMap.put(userId, this);
+                    webSocketRoom.put(roomNum, roomMap);
+                }
+                sendMessageMCR("上线");
+                log.info("聊天室当前人数："+roomMap.size());
             } else {
-                webSocketMap.put(userId, this);
-                //增加在线人数
-                addOnlineCount();
+                sendMessage("Server>>>>远程WebSoket连接失败");
             }
-            //处理连接成功消息的发送
-            sendMessage("Server>>>>远程WebSoket连接成功");
-            log.info("用户" + userId + "成功连接，当前的在线人数为" + getOnlineCount());
         } catch (Exception e) {
             log.error("打开websocket连接异常！");
         }
@@ -115,9 +138,22 @@ public class WebSocketServer {
     @OnClose
     public void onClose() {
         try {
-            if (webSocketMap.containsKey(userId)) {
-                webSocketMap.remove(userId);
-                subOnlineCount();
+            String msg = "用户退出....";
+            if (roomNum == 0) {
+                if (webSocketMap.containsKey(userId)) {
+                    webSocketMap.remove(userId);
+                    subOnlineCount();
+                }
+            } else if (roomNum == 0) {
+                if (webSocketRoom.containsKey(roomNum)) {
+                    ConcurrentHashMap<String, WebSocketServer> roomMap = webSocketRoom.get(roomNum);
+                    if (roomMap.containsKey(userId)) {
+                        roomMap.remove(userId);
+                        log.info("聊天室当前人数："+roomMap.size());
+                    }
+                }
+            } else {
+                msg = "用户失败....";
             }
             log.info("用户退出....");
         } catch (Exception e) {
@@ -148,23 +184,49 @@ public class WebSocketServer {
     public void onMessage(String message, Session session) {
         try {
             if (StringUtils.isNotEmpty(message)) {
-                try {
-                    //解析消息
-                    JSONObject jsonObject = JSON.parseObject(message);
-                    String toUserId = jsonObject.getString("toUserId");
-                    String msg = jsonObject.getString("msg");
+                //解析消息
+                JSONObject jsonObject = JSON.parseObject(message);
+                String toUserId = jsonObject.getString("toUserId");
+                String msg = jsonObject.getString("msg");
+                int type = jsonObject.getInteger("type");
+                if (type == 0) {
                     if (StringUtils.isNotEmpty(toUserId) && webSocketMap.containsKey(toUserId)) {
-                        webSocketMap.get(toUserId).sendMessage(msg);
-                        sendMessage("发送消息成功！");
+                        if (toUserId.equals(userId)) {
+                            msg = "不能自己给自己发送消息";
+                            webSocketMap.get(toUserId).sendMessage(msg);
+                        } else {
+                            webSocketMap.get(toUserId).sendMessage(msg);
+                            sendMessage("发送消息成功！");
+                        }
                     } else {
                         sendMessage("您推送消息的目标用户当前不在线，消息推送失败！");
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } else if (type == 1) {
+                    sendMessageMCR(msg);
+                } else {
+                    sendMessage("发送消息有误！");
                 }
             }
         } catch (Exception e) {
             log.error("消息中转发送异常！");
+        }
+    }
+
+    /**
+    *@params: [toUserId, msg]
+    *@return: void
+    *@description: 多人聊天发送消息
+    *@author: hufei
+    *@time: 2020/10/10 13:12
+    */
+    private void sendMessageMCR(String msg) {
+        if (webSocketRoom.containsKey(roomNum)) {
+            ConcurrentHashMap<String, WebSocketServer> roomMap = webSocketRoom.get(roomNum);
+            Iterator<String> iterator = roomMap.keySet().iterator();
+            while(iterator.hasNext()) {
+                String toUserId = iterator.next();
+                roomMap.get(toUserId).sendMessage(toUserId + ":" + msg);
+            }
         }
     }
 

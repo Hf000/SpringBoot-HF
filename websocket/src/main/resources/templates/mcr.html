@@ -14,7 +14,7 @@
         if (typeof(WebSocket) == "undefined") {
             console.log("对不起，您的浏览器不支持WebSocket");
         } else {
-            var webSocketUrl = "ws://localhost/ws/" + $("#userId").val();
+            var webSocketUrl = "ws://localhost/ws/1/" + $("#userId").val();
             if (socket != null) {
                 socket.close();
                 socket = null;
@@ -27,7 +27,11 @@
             //监听获取消息的方法
             socket.onmessage = function (msg) {
                 console.log(msg.data);
-                $("#msg").val(msg.data)
+                var msgContent = $("#msg").val();
+                if (msgContent.length > 0) {
+                    msgContent += '<br>';
+                }
+                $("#msg").val(msgContent + msg.data);
             };
             //监听关闭连接的方法
             socket.onclose = function () {
@@ -44,7 +48,7 @@
         if (typeof(WebSocket) == "undefined") {
             console.log("对不起，您的浏览器不支持WebSocket");
         } else {
-            socket.send('{"toUserId":"' + $("#toUserId").val() + '","msg":"' + $("#msg").val() + '"}');
+            socket.send('{"toUserId":"' + $("#userId").val() + '","msg":"' + $("#toMsg").val() + '","type":1}');
         }
     }
     // 退出系统时, 关闭建立的WebSocket链接
@@ -56,7 +60,7 @@
 <body>
     <div id="panel">
         <div class="panel-header">
-            <h2>即时通讯IM</h2>
+            <h2>多人聊天室</h2>
         </div>
         <div class="panel-content">
             <div class="user-pwd">
@@ -64,8 +68,7 @@
                 <input id="userId" name="userId" type="text" value="张三">
             </div>
             <div class="user-pwd">
-                <button class="btn-user">收</button>
-                <input id="toUserId" name="toUserId" type="text" value="李四">
+                <input id="toMsg" name="toMsg" type="text" value="" placeholder="请输入要发送的消息">
             </div>
             <div class="user-msg">
                 <input id="msg" name="msg" type="text" value="">
