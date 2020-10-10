@@ -27,11 +27,12 @@
             //监听获取消息的方法
             socket.onmessage = function (msg) {
                 console.log(msg.data);
-                var msgContent = $("#msg").val();
+                /*var msgContent = $("#msg").val();
                 if (msgContent.length > 0) {
                     msgContent += '<br>';
                 }
-                $("#msg").val(msgContent + msg.data);
+                $("#msg").val(msgContent + msg.data);*/
+                $("#msg").append(msg.data).append(' \n');
             };
             //监听关闭连接的方法
             socket.onclose = function () {
@@ -48,7 +49,12 @@
         if (typeof(WebSocket) == "undefined") {
             console.log("对不起，您的浏览器不支持WebSocket");
         } else {
-            socket.send('{"toUserId":"' + $("#userId").val() + '","msg":"' + $("#toMsg").val() + '","type":1}');
+            //参数校验
+            if (socket != null) {
+                socket.send('{"toUserId":"' + $("#userId").val() + '","msg":"' + $("#toMsg").val() + '","type":1}');
+            } else {
+                console.log("对不起，没有建立WebSocket连接");
+            }
         }
     }
     // 退出系统时, 关闭建立的WebSocket链接
@@ -68,7 +74,7 @@
                 <input id="userId" name="userId" type="text" value="张三">
             </div>
             <div class="user-msg">
-                <input id="msg" name="msg" type="text" value="" readonly="readonly">
+                <textarea id="msg" name="msg" type="text" value="" readonly="readonly"></textarea>
             </div>
             <div class="panel-footer">
                 <button class="login-btn"  onclick="openWebSocket()" >连接WebSocket</button>

@@ -44,7 +44,12 @@
         if (typeof(WebSocket) == "undefined") {
             console.log("对不起，您的浏览器不支持WebSocket");
         } else {
-            socket.send('{"toUserId":"' + $("#toUserId").val() + '","msg":"' + $("#msg").val() + '","type":0}');
+            //参数校验
+            if (socket != null) {
+                socket.send('{"toUserId":"' + $("#toUserId").val() + '","msg":"' + $("#msg").val() + '","type":0}');
+            } else {
+                console.log("对不起，没有建立WebSocket连接");
+            }
         }
     }
     // 退出系统时, 关闭建立的WebSocket链接

@@ -75,6 +75,17 @@ body{
 
 }
 
+.panel-content .user-msg textarea{
+    width: 100%;
+    height: 200px;
+    box-sizing: border-box;
+    padding-left: 0px;
+    border-radius: 5px;
+    border:2px solid #dddddd;
+    margin-top:16px;
+
+}
+
 
 .panel-content .user-send input{
     width: 100%;
