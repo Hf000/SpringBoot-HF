@@ -13,8 +13,8 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 public class Config {
 
     /**
-    *@params:
-    *@return:
+    *@params: []
+    *@return: ServerEndpointExporter
     *@description: 向spring中注入一个webSocket端点
     *@author: hufei
     *@time: 2020/10/10 10:16
