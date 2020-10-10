@@ -2,6 +2,7 @@ package com.hufei.websocket.server;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.swing.internal.plaf.metal.resources.metal;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,7 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @Description: 连接、消息管理
+ * @Author:hufei
+ * @CreateTime:2020-09-30
+ * @Description:连接、消息管理
  */
 @ServerEndpoint("/ws/{userId}")     //开启端点的方式进行访问注解
 @Component                          //将该实例实例化到spring容器中
@@ -35,9 +38,13 @@ public class WebSocketServer {
     //用户信息
     private String userId = "";
 
-    /*
-     * @Description:  打开WebSokcet连接
-     */
+    /**
+    *@params: [userId, session]
+    *@return: void
+    *@description: 打开WebSokcet连接
+    *@author: hufei
+    *@time: 2020/10/10 10:32
+    */
     @OnOpen
     public void onOPen(@PathParam("userId") String userId, Session session) {
         try {
@@ -60,36 +67,52 @@ public class WebSocketServer {
         }
     }
 
-    /*
-     * @Description: 服务端向客户端发送数据
-     */
-    public void sendMessage(String s) {
+    /**
+    *@params: [message]
+    *@return: void
+    *@description: 服务端向客户端发送数据
+    *@author: hufei
+    *@time: 2020/10/10 10:35
+    */
+    public void sendMessage(String message) {
         try {
-            this.session.getBasicRemote().sendText(s);
+            this.session.getBasicRemote().sendText(message == null ? "" : message);
             log.info("websocket连接成功，服务端向客户端发送连接成功消息");
         } catch (IOException e) {
             log.error("websocket服务端向客户端发送消息异常！");
         }
     }
 
-    /*
-     * @Description: 增加在线人数
-     */
+    /**
+    *@params: []
+    *@return: void
+    *@description: 增加在线人数
+    *@author: hufei
+    *@time: 2020/10/10 10:34
+    */
     public static synchronized void addOnlineCount() {
         WebSocketServer.onlineCount.incrementAndGet();
         log.info("websocket连接成功，当前在线人数加1，总的在线人数：" + getOnlineCount());
     }
 
-    /*
-     * @Description: 获取在线人数的数量
-     */
+    /**
+    *@params: []
+    *@return: AtomicInteger
+    *@description: 获取在线人数的数量
+    *@author: hufei
+    *@time: 2020/10/10 10:36
+    */
     public static synchronized AtomicInteger getOnlineCount() {
         return onlineCount;
     }
 
-    /*
-     * @Description:  关闭连接
-     */
+    /**
+    *@params: []
+    *@return: void
+    *@description: 关闭连接
+    *@author: hufei
+    *@time: 2020/10/10 10:37
+    */
     @OnClose
     public void onClose() {
         try {
@@ -104,16 +127,24 @@ public class WebSocketServer {
     }
 
     /**
-     * @Description:用户下线，当前在线人数减1
-     */
+    *@params: []
+    *@return: void
+    *@description: 用户下线，当前在线人数减1
+    *@author: hufei
+    *@time: 2020/10/10 10:37
+    */
     public static synchronized void subOnlineCount() {
         WebSocketServer.onlineCount.decrementAndGet();
         log.info("websocket连接关闭成功，当前在线人数减1，总的在线人数：" + getOnlineCount());
     }
 
-    /*
-     * @Description:消息中转
-     */
+    /**
+    *@params: [message, session]
+    *@return: void
+    *@description: 消息中转
+    *@author: hufei
+    *@time: 2020/10/10 10:38
+    */
     @OnMessage
     public void onMessage(String message, Session session) {
         try {
@@ -138,9 +169,13 @@ public class WebSocketServer {
         }
     }
 
-    /*
-     * @Description: 服务器消息推送
-     */
+    /**
+    *@params: [message, userId]
+    *@return: boolean
+    *@description: 服务器消息推送
+    *@author: hufei
+    *@time: 2020/10/10 10:38
+    */
     public static boolean sendInfo(String message, @PathParam("userId") String userId) throws IOException {
         boolean flag = false;
         try {
