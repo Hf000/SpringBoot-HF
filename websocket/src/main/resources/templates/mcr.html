@@ -67,14 +67,14 @@
                 <button class="btn-user">发</button>
                 <input id="userId" name="userId" type="text" value="张三">
             </div>
-            <div class="user-pwd">
-                <input id="toMsg" name="toMsg" type="text" value="" placeholder="请输入要发送的消息">
-            </div>
             <div class="user-msg">
                 <input id="msg" name="msg" type="text" value="">
             </div>
             <div class="panel-footer">
                 <button class="login-btn"  onclick="openWebSocket()" >连接WebSocket</button>
+                <div class="user-send">
+                    <input id="toMsg" name="toMsg" type="text" value="" placeholder="请输入要发送的消息">
+                </div>
                 <button class="login-btn" onclick="sendMessage()">发送消息</button>
             </div>
         </div>
