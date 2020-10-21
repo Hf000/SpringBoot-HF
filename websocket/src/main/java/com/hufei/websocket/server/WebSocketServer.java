@@ -75,17 +75,17 @@ public class WebSocketServer {
                 AtomicInteger roomOnlineCount = null;
                 if (webSocketRoomMap.containsKey(roomNum)) {
                     roomMap = webSocketRoomMap.get(roomNum);
+                    if (roomCountMap.containsKey(roomNum)) {
+                        roomOnlineCount = roomCountMap.get(roomNum);
+                    } else {
+                        roomOnlineCount = new AtomicInteger(0);
+                        roomCountMap.put(roomNum, roomOnlineCount);
+                    }
                     if (roomMap.containsKey(userId)) {
                         roomMap.remove(userId);
                         roomMap.put(userId, this);
                     } else {
                         roomMap.put(userId, this);
-                        if (roomCountMap.containsKey(roomNum)) {
-                            roomOnlineCount = roomCountMap.get(roomNum);
-                        } else {
-                            roomOnlineCount = new AtomicInteger(0);
-                            roomCountMap.put(roomNum, roomOnlineCount);
-                        }
                         addOnlineCount(roomOnlineCount);
                     }
                 } else {
