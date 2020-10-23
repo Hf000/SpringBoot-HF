@@ -1,6 +1,6 @@
 # SpringBoot-HF
 personal project
-1.SpringBoot项目搭建
+1.SpringBoot项目搭建，注意：启动类位置应该高于扫描包中类的位置级别
 2.整合SpringMVC拦截器
 3.整合事务和连接池（hikari（默认）、druid）
 4.整合mybatis、通用Mapper
