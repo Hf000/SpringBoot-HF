@@ -6,7 +6,7 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="user_name" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="age" jdbcType="INTEGER" property="age" />
@@ -27,7 +27,10 @@
         select * from tb_user where id = #{id}
   </select>
 
-  <select id="getUserAll" resultType="user">
+  <!--<select id="getUserAll" resultType="user">
+        select * from tb_user
+  </select>-->
+  <select id="getUserAll" resultMap="BaseResultMap">
         select * from tb_user
   </select>
 </mapper>

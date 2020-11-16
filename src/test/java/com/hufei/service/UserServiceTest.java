@@ -48,4 +48,10 @@ public class UserServiceTest {
         users.forEach(user -> System.out.println(user));
     }
 
+    @Test
+    public void selectUserAll() {
+        List<User> users = userServiceImpl.selectAll();
+        users.forEach(user -> System.out.println(user));
+    }
+
 }

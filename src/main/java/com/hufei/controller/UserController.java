@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import javax.websocket.server.PathParam;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author:hufei
@@ -40,6 +42,19 @@ public class UserController {
                                String note, Date created, Date updated) {
         User user = userServiceImpl.saveUserInfo(userName, password, name, age, sex, birthday, note, created, updated);
         return user;
+    }
+
+    @GetMapping("/findUser/{id}")
+    public User findUserInfo(@PathVariable Long id) {
+        if (id == null) id = 0l;
+        User user = userServiceImpl.getUser(id);
+        return user;
+    }
+
+    @GetMapping("/findUserAll")
+    public List<User> findUserInfo() {
+        List<User> users = userServiceImpl.selectAll();//userServiceImpl.getUserAll();
+        return users;
     }
 
 }
