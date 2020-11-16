@@ -77,7 +77,7 @@ public class JdbcConfig {
         targetDataSources.put(DBType.MASTER, masterDataSource);
         targetDataSources.put(DBType.SLAVE1, slave1DataSource);
         MyRoutingDataSource myRoutingDataSource = new MyRoutingDataSource();
-        myRoutingDataSource.setDefaultTargetDataSource(masterDataSource);
+        myRoutingDataSource.setDefaultTargetDataSource(masterDataSource);//设置默认的数据源
         myRoutingDataSource.setTargetDataSources(targetDataSources);
         return myRoutingDataSource;
     }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Date;
 
@@ -20,7 +21,9 @@ import java.util.Date;
 public class UserController {
 
 //    @Autowired
-//    private DataSource dataSource;
+//    private DataSource dataSource;    //单数据源注入
+    @Resource(name = "myRoutingDataSource")
+    private DataSource myRoutingDataSource;     //多数据源注入,获取的是默认数据源
 
     @Autowired
     private IUserService userServiceImpl;

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
@@ -16,7 +17,9 @@ import javax.sql.DataSource;
 public class HelloController {
 
 //    @Autowired                              //注入数据源
-//    private DataSource dataSource;
+//    private DataSource dataSource;    //单数据源注入
+    @Resource(name = "myRoutingDataSource")
+    private DataSource myRoutingDataSource;     //多数据源注入,获取的是默认数据源
 
 //    @Value("${hufei.url}")
 //    private String url;
