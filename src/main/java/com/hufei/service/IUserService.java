@@ -16,4 +16,6 @@ public interface IUserService {
     User saveUserInfo(String userName, String password, String name, Integer age, Integer sex, Date birthday,
                       String note, Date created, Date updated);
 
+    User getUser(Long id);
+
 }

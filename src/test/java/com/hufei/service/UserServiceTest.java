@@ -34,4 +34,10 @@ public class UserServiceTest {
         System.out.println("新增user信息 = "+user);
     }
 
+    @Test
+    public void getUser() {
+        User user = userServiceImpl.getUser(8l);
+        System.out.println(user);
+    }
+
 }
