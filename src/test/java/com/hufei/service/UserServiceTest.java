@@ -23,13 +23,13 @@ public class UserServiceTest {
 
     @Test
     public void findUserInfo() {
-        User user = userServiceImpl.findUserInfo(8l);
+        User user = userServiceImpl.findUserInfo(39l);
         System.out.println("user信息 = "+user);
     }
 
     @Test
     public void saveUserInfo() {
-        User user = userServiceImpl.saveUserInfo("test7","123456", "test7", 10, 1, new Date(),
+        User user = userServiceImpl.saveUserInfo("test11","123456", "test7", 10, 1, new Date(),
                 null, null, null);
         System.out.println("新增user信息 = "+user);
     }

@@ -1,4 +1,4 @@
-package com.hufei.config;
+package com.hufei.config.bean;
 
 import com.hufei.interceptor.CustomizeInterceptor;
 import org.springframework.context.annotation.Bean;

@@ -8,11 +8,22 @@
 spring:     #spring配置项
 #  profiles:      #多yaml文件配置项
 #    active: a,b      #激活多个yml配置文件, 其他配置文件的命名规则 application-*.yml
-  datasource:     #配置hikari数据连接池参数
-    driver-class-name: com.mysql.jdbc.Driver      #数据库驱动类地址
-    url: jdbc:mysql://127.0.0.1:3306/springboot_test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false      #数据库连接地址
-    username: root      #数据库账号
-    password: 123456      #数据库密码
+#  datasource:     #配置hikari数据连接池参数
+#    driver-class-name: com.mysql.jdbc.Driver      #数据库驱动类地址
+#    url: jdbc:mysql://127.0.0.1:3306/springboot_test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false      #数据库连接地址
+#    username: root      #数据库账号
+#    password: 123456      #数据库密码
+  datasource:
+    master:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/springboot_test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+    slave1:
+      jdbc-url: jdbc:mysql://192.168.186.66:3306/test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
   redis:      #配置redis相关参数
     host: localhost     #默认
     port: 6379      #默认
@@ -30,5 +41,5 @@ server:     #服务配置项
 
 logging:      #配置日志的记录级别
   level:      #日志等级配置项
-    com.hufei: debug      #表示以com.hufei开头的类的日志记录级别是debug
-    org.springframework: info     #表示以org.springframework开头的类的日志记录级别是info
+    com.hufei: error      #表示以com.hufei开头的类的日志记录级别是debug
+    org.springframework: WARN     #表示以org.springframework开头的类的日志记录级别是info

@@ -1,5 +1,6 @@
 package com.hufei.service.impl;
 
+import com.hufei.config.annotation.Master;
 import com.hufei.entity.User;
 import com.hufei.mapper.UserMapper;
 import com.hufei.service.IUserService;

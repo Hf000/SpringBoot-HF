@@ -19,8 +19,8 @@ import java.util.Date;
 @RestController
 public class UserController {
 
-    @Autowired
-    private DataSource dataSource;
+//    @Autowired
+//    private DataSource dataSource;
 
     @Autowired
     private IUserService userServiceImpl;

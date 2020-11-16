@@ -15,8 +15,8 @@ import javax.sql.DataSource;
 @RestController         //表示处理器注解 组合注解， @Controller + @ResponseBody
 public class HelloController {
 
-    @Autowired                              //注入数据源
-    private DataSource dataSource;
+//    @Autowired                              //注入数据源
+//    private DataSource dataSource;
 
 //    @Value("${hufei.url}")
 //    private String url;

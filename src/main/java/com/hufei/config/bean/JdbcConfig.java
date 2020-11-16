@@ -1,20 +1,23 @@
-package com.hufei.config;
+package com.hufei.config.bean;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.hufei.config.pojo.JdbcProperties;
+import com.hufei.config.MyRoutingDataSource;
+import com.hufei.config.enums.DBType;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author:hufei
  * @CreateTime:2020-09-04
  * @Description:jdbc配置类
  */
-//@Configuration                                            //指定当前类为配置类，采用了默认的数据库连接池所以这个配置类不需要了
+@Configuration                                            //指定当前类为配置类，采用了默认的数据库连接池所以这个配置类不需要了
 //@PropertySource("classpath:jdbc.properties")             //方式一：指定配置文件路径  通过引入配置文件的方式创建数据源
 //@EnableConfigurationProperties(JdbcProperties.class)      //方式二：指定配置项类
 public class JdbcConfig {
@@ -53,5 +56,31 @@ public class JdbcConfig {
     public DataSource getDataSource() {
         return new DruidDataSource();         //配置druid数据源
     }*/
+
+    /****************************配置多数据源开始*****************************/
+    @Bean
+    @ConfigurationProperties("spring.datasource.master")
+    public DataSource masterDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    @ConfigurationProperties("spring.datasource.slave1")
+    public DataSource slave1DataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public DataSource myRoutingDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
+                                          @Qualifier("slave1DataSource") DataSource slave1DataSource) {
+        Map<Object, Object> targetDataSources = new HashMap<>();
+        targetDataSources.put(DBType.MASTER, masterDataSource);
+        targetDataSources.put(DBType.SLAVE1, slave1DataSource);
+        MyRoutingDataSource myRoutingDataSource = new MyRoutingDataSource();
+        myRoutingDataSource.setDefaultTargetDataSource(masterDataSource);
+        myRoutingDataSource.setTargetDataSources(targetDataSources);
+        return myRoutingDataSource;
+    }
+    /****************************配置多数据源结束*****************************/
 
 }
