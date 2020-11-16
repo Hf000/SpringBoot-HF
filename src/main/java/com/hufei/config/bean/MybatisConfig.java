@@ -29,6 +29,7 @@ public class MybatisConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(myRoutingDataSource);
 //        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResource("classpath:mappers/*.xml"));//如果有mapper.xml文件，这里需要设置其路径
+//        sqlSessionFactoryBean.setTypeAliasesPackage("com.hufei.entity");  //配置mpper对应的实体类包路径
         return sqlSessionFactoryBean.getObject();
     }
 
