@@ -1,8 +1,10 @@
-package com.hufei.mapper;
+package com.hufei.dao;
 
 import com.hufei.entity.User;
+import com.hufei.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
-import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  * @Author:hufei
@@ -11,6 +13,8 @@ import tk.mybatis.mapper.common.Mapper;
  */
 //@Mapper    //如果启动类开启了@MapperScan注解，这里不需要这个注解了
 @Repository //这个注解可加可不加
-public interface UserMapper extends Mapper<User> {  //整合通用mapper后实体mapper要继承通用mapper的mapper<T>接口
-    public User getUser(long id);
+public interface UserMapper extends BaseMapper<User> {//BaseMapper继承通用Mapper<T>和MySqlMapper<T>
+    User getUser(long id);
+
+    List<User> getUserAll();
 }

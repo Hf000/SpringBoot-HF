@@ -1,14 +1,14 @@
 package com.hufei.service.impl;
 
-import com.hufei.config.annotation.Master;
 import com.hufei.entity.User;
-import com.hufei.mapper.UserMapper;
+import com.hufei.dao.UserMapper;
 import com.hufei.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author:hufei
@@ -48,6 +48,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getUser(Long id) {
         return userMapper.getUser(id);
+    }
+
+    @Override
+    public List<User> getUserAll() {
+        return userMapper.getUserAll();
+    }
+
+    @Override
+    public List<User> selectAll() {
+        return userMapper.selectAll();
     }
 
 }

@@ -18,8 +18,8 @@ public class HelloController {
 
 //    @Autowired                              //注入数据源
 //    private DataSource dataSource;    //单数据源注入
-    @Resource(name = "myRoutingDataSource")
-    private DataSource myRoutingDataSource;     //多数据源注入,获取的是默认数据源
+//    @Resource(name = "myRoutingDataSource")
+//    private DataSource myRoutingDataSource;     //多数据源注入,获取的是默认数据源
 
 //    @Value("${hufei.url}")
 //    private String url;

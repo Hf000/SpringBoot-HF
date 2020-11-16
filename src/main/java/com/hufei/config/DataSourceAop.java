@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * @CreateTime:2020-11-16
  * @Description:设置数据源路由key，数据源AOP方式：默认情况下，所有的查询都走从库，插入/修改/删除走主库
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class DataSourceAop {
     @Pointcut("!@annotation(com.hufei.config.annotation.Master) " +
             "&& (execution(* com.hufei.service..*.select*(..)) " +

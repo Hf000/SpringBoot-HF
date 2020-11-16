@@ -22,8 +22,8 @@ public class UserController {
 
 //    @Autowired
 //    private DataSource dataSource;    //单数据源注入
-    @Resource(name = "myRoutingDataSource")
-    private DataSource myRoutingDataSource;     //多数据源注入,获取的是默认数据源
+//    @Resource(name = "myRoutingDataSource")
+//    private DataSource myRoutingDataSource;     //多数据源注入,获取的是默认数据源
 
     @Autowired
     private IUserService userServiceImpl;

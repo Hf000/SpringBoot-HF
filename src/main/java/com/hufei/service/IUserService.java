@@ -3,6 +3,7 @@ package com.hufei.service;
 import com.hufei.entity.User;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author:hufei
@@ -17,5 +18,9 @@ public interface IUserService {
                       String note, Date created, Date updated);
 
     User getUser(Long id);
+
+    List<User> getUserAll();
+
+    List<User> selectAll();
 
 }

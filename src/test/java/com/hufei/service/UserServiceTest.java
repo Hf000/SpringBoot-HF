@@ -1,6 +1,7 @@
 package com.hufei.service;
 
 import com.hufei.entity.User;
+import com.sun.org.apache.xml.internal.res.XMLErrorResources_tr;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author:hufei
@@ -23,7 +25,7 @@ public class UserServiceTest {
 
     @Test
     public void findUserInfo() {
-        User user = userServiceImpl.findUserInfo(39l);
+        User user = userServiceImpl.findUserInfo(8l);
         System.out.println("user信息 = "+user);
     }
 
@@ -38,6 +40,12 @@ public class UserServiceTest {
     public void getUser() {
         User user = userServiceImpl.getUser(8l);
         System.out.println(user);
+    }
+
+    @Test
+    public void getUserAll() {
+        List<User> users = userServiceImpl.getUserAll();
+        users.forEach(user -> System.out.println(user));
     }
 
 }

@@ -18,10 +18,10 @@ import javax.sql.DataSource;
  * @CreateTime:2020-11-16
  * @Description:Mybatis配置类
  */
-@EnableTransactionManagement    //开启springboot的事务支持注解，等同于xml配置方式的 <tx:annotation-driven />
-@Configuration  //开启配置类注解
+//@EnableTransactionManagement    //开启springboot的事务支持注解，等同于xml配置方式的 <tx:annotation-driven />
+//@Configuration  //开启配置类注解
 public class MybatisConfig {
-    @Resource(name = "myRoutingDataSource")
+//    @Resource(name = "myRoutingDataSource")
     private DataSource myRoutingDataSource;
 
     @Bean
