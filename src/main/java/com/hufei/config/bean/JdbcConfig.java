@@ -17,7 +17,7 @@ import java.util.Map;
  * @CreateTime:2020-09-04
  * @Description:jdbc配置类
  */
-//@Configuration                                            //指定当前类为配置类，采用了默认的数据库连接池所以这个配置类不需要了
+@Configuration                                            //指定当前类为配置类，采用了默认的数据库连接池所以这个配置类不需要了
 //@PropertySource("classpath:jdbc.properties")             //方式一：指定配置文件路径  通过引入配置文件的方式创建数据源
 //@EnableConfigurationProperties(JdbcProperties.class)      //方式二：指定配置项类
 public class JdbcConfig {

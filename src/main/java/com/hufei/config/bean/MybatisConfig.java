@@ -18,18 +18,21 @@ import javax.sql.DataSource;
  * @CreateTime:2020-11-16
  * @Description:Mybatis配置类
  */
-//@EnableTransactionManagement    //开启springboot的事务支持注解，等同于xml配置方式的 <tx:annotation-driven />
-//@Configuration  //开启配置类注解
+@EnableTransactionManagement    //开启springboot的事务支持注解，等同于xml配置方式的 <tx:annotation-driven />
+@Configuration  //开启配置类注解
 public class MybatisConfig {
-//    @Resource(name = "myRoutingDataSource")
+    @Resource(name = "myRoutingDataSource")
     private DataSource myRoutingDataSource;
 
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(myRoutingDataSource);
-//        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResource("classpath:mappers/*.xml"));//如果有mapper.xml文件，这里需要设置其路径
-//        sqlSessionFactoryBean.setTypeAliasesPackage("com.hufei.entity");  //配置mpper对应的实体类包路径
+        //手动设置数据源，需要手动指定mapper文件加载路径和类的别名
+        //如果有mapper.xml文件，这里需要设置其路径,  注意：getResource()方法加载指定名称文件， getResources()加载该路径下的所有文件
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*.xml"));
+        //配置mpper对应的实体类包路径
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.hufei.entity");
         return sqlSessionFactoryBean.getObject();
     }
 

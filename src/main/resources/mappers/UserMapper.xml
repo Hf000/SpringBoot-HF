@@ -23,7 +23,7 @@
     id, user_name, password, name, age, sex, birthday, note, created, updated
   </sql>
 
-  <select id="getUser" resultType="com.hufei.entity.User">
+  <select id="getUser" resultType="user">
         select * from tb_user where id = #{id}
   </select>
 

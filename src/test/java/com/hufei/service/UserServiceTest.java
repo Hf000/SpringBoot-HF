@@ -31,7 +31,7 @@ public class UserServiceTest {
 
     @Test
     public void saveUserInfo() {
-        User user = userServiceImpl.saveUserInfo("test11","123456", "test7", 10, 1, new Date(),
+        User user = userServiceImpl.saveUserInfo("test12","123456", "test7", 10, 1, new Date(),
                 null, null, null);
         System.out.println("新增user信息 = "+user);
     }
