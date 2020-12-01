@@ -87,6 +87,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <!-- 引入elasticJob启动依赖 -->
+        <dependency>
+            <groupId>com.github.kuhn-he</groupId>
+            <artifactId>elastic-job-lite-spring-boot-starter</artifactId>
+            <version>2.1.5</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

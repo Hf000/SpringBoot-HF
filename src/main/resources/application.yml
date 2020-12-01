@@ -47,3 +47,11 @@ logging:      #配置日志的记录级别
   level:      #日志等级配置项
     com.hufei: error      #表示以com.hufei开头的类的日志记录级别是debug
     org.springframework: error     #表示以org.springframework开头的类的日志记录级别是info
+
+elaticjob:      #elastic-job定时任务配置项
+  zookeeper:      #zookeeper配置项
+    server-lists: 127.0.0.1:2181      #zookeeper地址
+    namespace: myJob      #定时任务命名空间
+#配置动态任务案例的zk和namespace
+zk: 127.0.0.1:2181
+namesp: autoTask
