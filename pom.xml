@@ -93,6 +93,17 @@
             <artifactId>elastic-job-lite-spring-boot-starter</artifactId>
             <version>2.1.5</version>
         </dependency>
+        <!--swagger文档-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.6.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
