@@ -24,15 +24,21 @@ public class MybatisConfig {
     @Resource(name = "myRoutingDataSource")
     private DataSource myRoutingDataSource;
 
+    @Value("${mybatis.mapper-locations}")
+    private String mapperLocations;
+
+    @Value("${mybatis.type-aliases-package}")
+    private String typeAliasesPackage;
+
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(myRoutingDataSource);
         //手动设置数据源，需要手动指定mapper文件加载路径和类的别名
         //如果有mapper.xml文件，这里需要设置其路径,  注意：getResource()方法加载指定名称文件， getResources()加载该路径下的所有文件
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocations));
         //配置mpper对应的实体类包路径
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.hufei.entity");
+        sqlSessionFactoryBean.setTypeAliasesPackage(typeAliasesPackage);
         return sqlSessionFactoryBean.getObject();
     }
 

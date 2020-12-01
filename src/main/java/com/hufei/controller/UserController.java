@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping("/findUserAll")
     public List<User> findUserInfo() {
-        List<User> users = userServiceImpl.selectAll();//userServiceImpl.getUserAll();
+        List<User> users = userServiceImpl.getUserAll();//userServiceImpl.selectAll();
         return users;
     }
 

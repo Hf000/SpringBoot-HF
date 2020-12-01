@@ -1,5 +1,6 @@
 package com.hufei.service.impl;
 
+import com.hufei.config.annotation.Master;
 import com.hufei.entity.User;
 import com.hufei.dao.UserMapper;
 import com.hufei.service.IUserService;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements IUserService {
         return userMapper.getUser(id);
     }
 
+    @Master
     @Override
     public List<User> getUserAll() {
         return userMapper.getUserAll();
