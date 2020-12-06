@@ -1,5 +1,3 @@
-/target/
-/.idea/
-/springboot.iml
-/websocket/target/
-/websocket/websocket.iml
+*.idea
+*.iml
+target/
