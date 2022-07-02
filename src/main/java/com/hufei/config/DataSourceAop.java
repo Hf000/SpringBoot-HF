@@ -9,25 +9,26 @@ import org.springframework.stereotype.Component;
  * @Author:hufei
  * @CreateTime:2020-11-16
  * @Description:设置数据源路由key，数据源AOP方式：默认情况下，所有的查询都走从库，插入/修改/删除走主库
+ * 自定义实现多数据源 - 7
  */
 @Aspect
 @Component
 public class DataSourceAop {
     @Pointcut("!@annotation(com.hufei.config.annotation.Master) " +
-            "&& (execution(* com.hufei.service..*.select*(..)) " +
-            "|| execution(* com.hufei.service..*.get*(..))" +
-            "|| execution(* com.hufei.service..*.find*(..)))")
+            "&& (execution(* com.hufei.*.service..*.select*(..)) " +
+            "|| execution(* com.hufei.*.service..*.get*(..))" +
+            "|| execution(* com.hufei.*.service..*.find*(..)))")
     public void readPointcut() {
     }
 
     @Pointcut("@annotation(com.hufei.config.annotation.Master) " +
-            "|| execution(* com.hufei.service..*.insert*(..)) " +
-            "|| execution(* com.hufei.service..*.add*(..)) " +
-            "|| execution(* com.hufei.service..*.update*(..)) " +
-            "|| execution(* com.hufei.service..*.edit*(..)) " +
-            "|| execution(* com.hufei.service..*.delete*(..)) " +
-            "|| execution(* com.hufei.service..*.remove*(..))" +
-            "|| execution(* com.hufei.service..*.save*(..))")
+            "|| execution(* com.hufei.*.service..*.insert*(..)) " +
+            "|| execution(* com.hufei.*.service..*.add*(..)) " +
+            "|| execution(* com.hufei.*.service..*.update*(..)) " +
+            "|| execution(* com.hufei.*.service..*.edit*(..)) " +
+            "|| execution(* com.hufei.*.service..*.delete*(..)) " +
+            "|| execution(* com.hufei.*.service..*.remove*(..))" +
+            "|| execution(* com.hufei.*.service..*.save*(..))")
     public void writePointcut() {
     }
 

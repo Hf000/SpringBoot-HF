@@ -16,6 +16,7 @@ import java.util.Map;
  * @Author:hufei
  * @CreateTime:2020-09-04
  * @Description:jdbc配置类
+ * 自定义实现多数据源 - 3
  */
 @Configuration                                            //指定当前类为配置类，采用了默认的数据库连接池所以这个配置类不需要了
 //@PropertySource("classpath:jdbc.properties")             //方式一：指定配置文件路径  通过引入配置文件的方式创建数据源

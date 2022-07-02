@@ -17,6 +17,7 @@ import javax.sql.DataSource;
  * @Author:hufei
  * @CreateTime:2020-11-16
  * @Description:Mybatis配置类
+ * 自定义实现多数据源 - 6
  */
 @EnableTransactionManagement    //开启springboot的事务支持注解，等同于xml配置方式的 <tx:annotation-driven />
 @Configuration  //开启配置类注解
